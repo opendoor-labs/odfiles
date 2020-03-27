@@ -14,5 +14,4 @@ Various setup scripts
 - [`symlink`](./symlink) - symlink files throughout `$DOTFILES` that end in `.symlink`
 - [`unsetup_brew`](./unsetup_brew) - remove [Homebrew](https://brew.sh) and all install casks/formulae
 - [`unsetup_work`](./unsetup_work) - remove work config (delete any locally generated files and revert relevant commits)
-  > > > > > > > d0ca784... Switch from `.tmux` to a hand-rolled config (#85)
 - [`setup_zsh`](./setup_zsh) - adds [`zsh`](http://zsh.sourceforge.net/) to `/etc/shells`, sets it to the default shell, and loads `zsh` to install plugins & finish installation
