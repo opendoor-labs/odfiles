@@ -24,6 +24,7 @@ tap "dandavison/delta", "https://github.com/dandavison/delta"
 # <<<<<<<< packages (formulae) >>>>>>>>
 
 brew "bat"
+brew "coreutils"
 brew "exa"
 brew "fasd"
 brew "fd"

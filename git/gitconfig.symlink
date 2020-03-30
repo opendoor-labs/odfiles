@@ -1,7 +1,6 @@
 # local/private config pulled from include
 [include]
 	path = ~/.gitconfig.local
-# for work projects
 [hub]
 	protocol = ssh
 [color]
