@@ -11,7 +11,7 @@ main() {
   # `brew --prefix` takes ~25ms on my machine (to see how long it takes on yours
   # try `hyperfine 'brew --prefix'`). To avoid that overhead I hardcode the
   # path (seems pretty stable).
-  export HOMEBREW_PREFIX="/usr/local"
+  [ -d /usr/local/Homebrew ] && export HOMEBREW_PREFIX="/usr/local"
 
   export GOPATH="$HOME/go"
 
