@@ -9,7 +9,7 @@ macOS configuration for Opendoor employees.
   - [the anti-pitch](#the-anti-pitch)
   - [.files values](#.files-values)
 - [quickstart](#quickstart)
-- [next-steps](#next-steps)
+- [next steps](#next-steps)
   - [add your own configuration](#add-your-own-configuration)
   - [add secrets safely](#add-secrets-safely)
   - [explore features/configuration](#explore-featuresconfiguration)
