@@ -12,11 +12,6 @@ command -v brew > /dev/null || {
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 }
 
-cd "$DOTFILES" || {
-  echo "failed to \`cd\` to $DOTFILES, \`brew bundle\` not run"
-  exit 1
-}
-
-brew bundle
+brew bundle --file "$DOTFILES/Brewfile"
 
 success "installed packages"
