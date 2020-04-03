@@ -13,7 +13,11 @@ source "${BASH_SOURCE%/*}/check_dotfiles_variable.sh"
 # set up Homebrew and all packages from `$DOTFILES/Brewfile`
 # `source` so that Homebrew is added to PATH for future setup steps (not
 # strictly needed on macOS, using `source` anyway since there's no harm)
-source "$DOTFILES/infra/setup/bin/setup_brew"
+source "$DOTFILES/infra/setup/bin/setup_brew" || {
+  echo 'Homebrew installation had at least one failure'
+  echo 'This can often be flaky and only prevent use of a package or two'
+  echo 'If the error looks more severe you may want to investigate more'
+}
 
 # generate user-specific gitconfig (name & email) @ `$HOME/.gitconfig.local`
 "$DOTFILES/infra/setup/bin/setup_git_config" "$HOME/.gitconfig.local" --skip-existing
