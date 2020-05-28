@@ -26,6 +26,7 @@
 # ref - http://zsh.sourceforge.net/Intro/intro_4.html (search `autoload` for
 # explanation of loading behavior described above)
 
+setopt extended_glob # required for below expansion
 # add all directories named `functions` throughout this repo to `fpath` and
 # autoload any executable files in those folders
 for dir in $DOTFILES/**/functions; do
@@ -40,3 +41,4 @@ for dir in $DOTFILES/**/functions; do
   fpath=("$dir" $fpath)
 done
 unset dir
+setopt no_extended_glob # disable after use

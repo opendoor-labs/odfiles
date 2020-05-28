@@ -31,7 +31,6 @@ source "$DOTFILES/zsh/completion.zsh"
 source "$DOTFILES/zsh/config.zsh"
 source "$DOTFILES/zsh/keymap.zsh"
 source "$DOTFILES/zsh/manydots.zsh"
-source "$DOTFILES/zsh/options.zsh"
 
 # $PATH configuration
 # perform early so that executables are available for future config files
@@ -91,14 +90,17 @@ source "$DOTFILES/zsh/plugins.zsh"
 # define variable to store list of files to source
 # note: -U ensures uniqueness
 typeset -U config_files
-# Note: this expansion requires the `extended_glob` option to be set
-# this is done in `./options.zsh`
+setopt extended_glob # required for below expansion
 config_files=($DOTFILES/**/*.zsh~*/zsh/*)
 for config_file in $config_files; do source "$config_file"; done
 unset config_files config_file
+setopt no_extended_glob # disable after use
 
 # initialize direnv environment variable manager - https://direnv.net
 command -v direnv > /dev/null && eval "$(direnv hook zsh)"
+
+# set options last to override any options set only for script purposes
+source "$DOTFILES/zsh/options.zsh"
 
 # any last local overrides, gitignored to avoid checking in
 [ -f "$DOTFILES/zsh/local.zsh" ] && source "$DOTFILES/zsh/local.zsh"
