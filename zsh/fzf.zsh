@@ -44,7 +44,7 @@ command -v fd > /dev/null && {
 
 # <<<< config >>>>
 
-# NOTE: corresponding widgets defined in `./functions` &
+# NOTE: corresponding widgets defined in `$DOTFILES/functions/fzf` &
 # `$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh`
 
 # << zsh functions -> widgets >>
@@ -68,8 +68,7 @@ else
   export FZF_ALT_C_COMMAND="find . -type d"
 fi
 
-export FZF_DEFAULT_OPTS="--height 99% --reverse --no-mouse --cycle\
- --select-1 --exit-0 --multi\
+export FZF_DEFAULT_OPTS="--height 99% --reverse --no-mouse --cycle --multi\
  $_fzf_preview_window\
  --bind ctrl-j:down,ctrl-k:up,ctrl-space:toggle-preview,\
 ctrl-d:preview-page-down,ctrl-u:preview-page-up,ctrl-a:select-all+accept"
@@ -80,7 +79,7 @@ ctrl-d:preview-page-down,ctrl-u:preview-page-up,ctrl-a:select-all+accept"
 bindkey '^g' fzf_repo_file_widget
 # filter and output all files/directories (including those listed in (git)ignore
 # files) below current directory
-bindkey '^a' fzf_all_widget
+bindkey '^i' fzf_all_widget
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="$_fzf_bat_preview $_fzf_hidden_preview_window"
