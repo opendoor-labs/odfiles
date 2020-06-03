@@ -31,7 +31,10 @@ zinit light zsh-users/zsh-autosuggestions
 
 # note: any plugins that define widgets the syntax highlighting might need to
 # color (such as `zsh-autosuggestions`) must be loaded prior
-zinit light zsh-users/zsh-syntax-highlighting
+# ref - search fast-syntax-highlighting
+# http://zdharma.org/zinit/wiki/GALLERY/#plugins
+zinit ice atload"FAST_HIGHLIGHT[chroma-man]="
+zinit light zdharma/fast-syntax-highlighting
 
 # synchronize system clipboard
 # theoretically you might need to source this after other keymappings, have not
@@ -59,13 +62,6 @@ zinit light skywind3000/z.lua
 # ref - https://github.com/zsh-users/zsh-autosuggestions#configuration
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244' # light grey
 ZSH_AUTOSUGGEST_USE_ASYNC=true # can be set to anything
-
-# <<<< syntax highlighting >>>>
-# refs:
-# - https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
-# - https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
-typeset -A ZSH_HIGHLIGHT_STYLES
-ZSH_HIGHLIGHT_STYLES[comment]='fg=111'
 
 # << keymappings >>
 # ref - https://github.com/zsh-users/zsh-autosuggestions#key-bindings
