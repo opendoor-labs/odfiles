@@ -1,7 +1,5 @@
 #! /usr/bin/env zsh
 
-command -v smat > /dev/null && alias cat=smat # $DOTFILES/functions/smat
-
 # <<<< generics >>>>
 # these generic aliases allow changing the underlying command without having to
 # change your muscle memory
