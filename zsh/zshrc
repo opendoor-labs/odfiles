@@ -29,10 +29,6 @@ source "$DOTFILES/zsh/completion.zsh"
 source "$DOTFILES/zsh/keymap.zsh"
 source "$DOTFILES/zsh/manydots.zsh"
 
-# $PATH configuration
-# perform early so that executables are available for future config files
-source "$DOTFILES/zsh/path.zsh"
-
 # <<<< files with dependencies >>>>
 # these files depend either on executables made accessible via $PATH or code
 # defined in earlier config files.
