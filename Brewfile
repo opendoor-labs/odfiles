@@ -30,6 +30,7 @@ brew "fzf"
 brew "git"
 brew "git-delta"
 brew 'jq'
+brew "lua" # `z.lua` dependency
 brew "mdcat"
 brew "neovim"
 brew "ncurses"
