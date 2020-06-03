@@ -13,80 +13,10 @@ main() {
 
   local overwrite_all=false backup_all=false skip_all=false
 
-  link_base_files
-  [[ $INSTALL_NATHAN_SYMLINKS == true ]] && link_nathan_files
-  [[ $INSTALL_GUI_SYMLINKS == true ]] && link_gui_files
-
-  return 0
-}
-
-# link base files comprising meat of config
-link_base_files() {
-  link_file "$DOTFILES/utilities/git/gitconfig" "$HOME/.gitconfig"
-  link_file "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
-  link_file "$DOTFILES/tool-versions" "$HOME/.tool-versions"
-
-  # editor configuration
-  link_file "$DOTFILES/neovim/init.vim" "$HOME/.config/nvim/init.vim"
-  link_file \
-    "$DOTFILES/neovim/coc-settings.jsonc" \
-    "$HOME/.config/nvim/coc-settings.json"
-
-  # shell configuration
   link_file "$DOTFILES/zsh/zshenv" "$HOME/.zshenv"
   link_file "$DOTFILES/zsh/zshrc" "$HOME/.zshrc"
-}
 
-# link nathan files that most people will likely find unnecessary
-link_nathan_files() {
-  info "Linking nathan-specific files"
-
-  link_file "$DOTFILES/utilities/git/gitignore" "$HOME/.gitignore"
-  link_file "$DOTFILES/misc/ssh/config" "$HOME/.ssh/config"
-  # configs for autoformatters
-  link_file "$DOTFILES/misc/formatters/prettierrc.json" "$HOME/.prettierrc.json"
-  link_file "$DOTFILES/misc/formatters/rustfmt.toml" "$HOME/.rustfmt.toml"
-}
-
-# link files for GUI apps, currently only supported on macOS
-link_gui_files() {
-  "$DOTFILES/infra/scripts/is_macos.sh" || {
-    echo 'skipping gui symlinks - currently only supported on macOS'
-    return 1
-  }
-
-  info "Linking GUI-specific links"
-
-  # Vim bindings for Xcode
-  link_file "$DOTFILES/gui/xvimrc" "$HOME/.xvimrc"
-
-  # terminal emulator
-  link_file \
-    "$DOTFILES/gui/apps/alacritty/alacritty.yml" \
-    "$HOME/.config/alacritty/alacritty.yml"
-
-  # window organization/resizing
-  link_file \
-    "$DOTFILES/gui/apps/rectangle/com.knollsoft.Rectangle.plist" \
-    "$HOME/Library/Preferences/com.knollsoft.Rectangle.plist"
-
-  # window switcher
-  link_file \
-    "$DOTFILES/gui/apps/alt-tab/com.lwouis.alt-tab-macos.plist" \
-    "$HOME/Library/Preferences/com.lwouis.alt-tab-macos.plist"
-
-  # launcher (Alfred, Spotlight, Windows search, etc.)
-  link_file \
-    "$DOTFILES/gui/apps/ueli/config.json" \
-    "$HOME/Library/Application Support/ueli/config.json"
-
-  # VSCode - text editor
-  link_file \
-    "$DOTFILES/gui/apps/vscode/keybindings.json" \
-    "$HOME/Library/Application Support/Code/User/keybindings.json"
-  link_file \
-    "$DOTFILES/gui/apps/vscode/settings.json" \
-    "$HOME/Library/Application Support/Code/User/settings.json"
+  return 0
 }
 
 # link single file between `src` & `dst`
@@ -176,23 +106,4 @@ link_file() {
     fi
   }
 }
-
-parse_input() {
-  for opt in "$@"; do
-    case $opt in
-      --gui)
-        INSTALL_GUI_SYMLINKS=true
-        ;;
-      --nathan)
-        INSTALL_NATHAN_SYMLINKS=true
-        ;;
-      --*)
-        # shellcheck disable=SC2016
-        printf 'invalid flag passed to `%s`\n' 'symlink'
-        exit 1
-        ;;
-    esac
-  done
-}
-
 main "$@"

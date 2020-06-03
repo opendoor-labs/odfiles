@@ -10,20 +10,15 @@ source "${BASH_SOURCE%/*}/check_dotfiles_variable.sh"
 
 # run in separate subshells
 
-printf '\x1b[38;5;006mstarting dotfiles setup\x1b[0m\n\n'
+printf '\x1b[38;5;006mstarting odotfiles setup\x1b[0m\n\n'
 
-# set up Homebrew and all packages from `$DOTFILES/Brewfile` &
-# `$DOTFILES/misc/macos/Brewfile`
-# `source` so that Homebrew is added to PATH for future setup steps (needed for
-# Linux setup)
+# set up Homebrew and all packages from `$DOTFILES/Brewfile`
+# `source` so that Homebrew is added to PATH for future setup steps
 source "$DOTFILES/infra/setup/bin/setup_brew" || {
   echo 'Homebrew installation had at least one failure'
   echo 'This can often be flaky and only prevent use of a package or two'
   echo 'If the error looks more severe you may want to investigate more'
 }
-
-# generate user-specific gitconfig (name & email) @ `$HOME/.gitconfig.local`
-"$DOTFILES/infra/setup/bin/setup_git_config" "$HOME/.gitconfig.local" --skip-existing
 
 # symlink config files to their correct locations
 "$DOTFILES/infra/setup/bin/symlink"
@@ -32,20 +27,6 @@ source "$DOTFILES/infra/setup/bin/setup_brew" || {
 # this adds `zsh` to our allowed shells and sets it as the default. Then it
 # loads `zsh` for the first time to install plugins & complete setup.
 "$DOTFILES/infra/setup/bin/setup_zsh"
-
-# load neovim for the first time to install plugins
-"$DOTFILES/infra/setup/bin/setup_neovim"
-
-# set up various pieces too small for their own files
-# see the file in question for each piece
-"$DOTFILES/infra/setup/bin/setup_bits_and_pieces"
-
-# run after `$DOTFILES/infra/setup/bin/symlink` so that $DOTFILES/utilities/asdf/tool-versions is
-# symlinked to `$HOME/.tool-versions`
-"$DOTFILES/infra/setup/bin/setup_asdf"
-
-# optionally set up work-specific config (confirms via user prompt)
-"$DOTFILES/infra/setup/bin/setup_work"
 
 printf '\n\n\x1b[38;5;006msetup finished! \x1b[0m🎉\n'
 printf '\x1b[38;5;006mstarting new shell, happy coding\x1b[0m\n'

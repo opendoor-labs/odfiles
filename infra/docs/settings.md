@@ -8,11 +8,11 @@ Currently these options are primarily booleans enabling or disabling a specific 
 
 ```jsonc
 {
-  "asdf": boolean, // enable/disable versions via `asdf`
   // value of $EDITOR - "nvim", "emacs", "code", etc.
   "editor": "<valid-editor-program>",
   "fzf": boolean, // enable/disable `fzf` including keybindings & completions
   "git-aliases": boolean, // enable/disable git aliases
+  "prompt": boolean, // enable or disable prompt
   "theme": "dark|light", // color theme - "dark" | "light"
   "vi-mode": boolean, // enable/disable `vi-mode` (currently only in `zsh`)
   // conditionally source `.zshrc` config (does not affect `.zshenv` sourcing)
