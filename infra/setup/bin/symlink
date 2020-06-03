@@ -7,8 +7,6 @@ source "${BASH_SOURCE%/*}/../check_dotfiles_variable.sh"
 source "$DOTFILES/infra/scripts/prompts.sh"
 
 main() {
-  parse_input "$@"
-
   header "<< Symlinking >>"
 
   local overwrite_all=false backup_all=false skip_all=false
