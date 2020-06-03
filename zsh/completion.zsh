@@ -2,9 +2,7 @@
 
 # add back initizialization of compinit
 autoload -U compinit
-# ignore insecure directories (side-effect of `brew`'s installation methods)
-# ref - https://stackoverflow.com/a/43544733
-compinit -u
+compinit
 
 # case insensitive completion
 # ref - https://superuser.com/questions/1092033/how-can-i-make-zsh-tab-completion-fix-capitalization-errors-for-directorys-and
