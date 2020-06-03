@@ -1,9 +1,9 @@
 {
-  "asdf": true,
   "editor": "nvim",
   "fzf": true,
   "git-aliases": true,
+  "prompt": "true",
   "theme": "dark",
-  "vi-mode": true,
+  "vi-mode": false,
   "zsh": true
 }
