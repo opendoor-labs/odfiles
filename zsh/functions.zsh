@@ -1,7 +1,6 @@
 #! /usr/bin/env zsh
 
-# enables functions defined in any folder named `functions` throughout this repo
-# e.g. $DOTFILES/**/functions
+# enables functions defined under `$DOTFILES/functions`
 #
 # there are two ways (that I'm aware of) to enable functions in `zsh`. Let's say
 # we have a function called `example` defined at "$DOTFILES/functions/example".
@@ -26,18 +25,24 @@
 # ref - http://zsh.sourceforge.net/Intro/intro_4.html (search `autoload` for
 # explanation of loading behavior described above)
 
-# add all directories named `functions` throughout this repo to `fpath` and
-# autoload any executable files in those folders
+# add directories holding functions to `fpath`
+fpath=(
+  "$DOTFILES/functions"
+  "$DOTFILES/functions/fzf"
+  "$DOTFILES/functions/git"
+  $fpath
+)
+
+# autoload any executable files in $DOTFILES/functions
+#
+# `(.x:t)` selects all executables (the `x`) files (the `.`) & extracts the
+# filename (the `:t`)
+# refs
+# - http://zsh.sourceforge.net/Doc/Release/Expansion.html#Glob-Qualifiers
+# - http://zsh.sourceforge.net/Doc/Release/Expansion.html#Glob-Operators
 setopt extended_glob # required for below expansion
-for dir in $DOTFILES/**/functions; do
-  # `.#(.x:t)` selects all hidden (`.#` selects files starting with 0 or more
-  # `.`s) & non-hidden executable (the `x`) files (the `.`) & extracts the
-  # filename (the `:t`)
-  # refs
-  # - http://zsh.sourceforge.net/Doc/Release/Expansion.html#Glob-Qualifiers
-  # - http://zsh.sourceforge.net/Doc/Release/Expansion.html#Glob-Operators
-  autoload -Uz "$dir"/.#*(.x:t)
-  fpath=("$dir" $fpath)
+for function in $DOTFILES/functions/**/*(.x:t); do
+  autoload -Uz "$function"
 done
-unset dir
 setopt no_extended_glob # disable after use
+unset function

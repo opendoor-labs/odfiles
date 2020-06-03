@@ -24,18 +24,20 @@ In a sign of `zsh`'s mainstreamness Apple is switching to `zsh` for its default 
 
 ## skimmable list of files
 
-- [`alias.zsh`](#aliaszsh) - define generic aliases. Aliases specific to a topic (for example aliases for `tmux`) should go in the corresponding topic folder (e.g. [`$DOTFILES/tmux/alias.zsh`](../tmux/alias.zsh)).
-- [`asdf.zsh`](#asdfzsh) - initialize [`asdf`](https://asdf-vm.com) (the version manager I use)
+- [`alias.zsh`](#aliaszsh) - define generic aliases
 - [`completion.zsh`](#completionzsh) - initialize completion
 - [`dynamic_env_vars.zsh`](./dynamic_env_vars.zsh) - set environment variables whose value requires dynamism (dependencies)
-- [`functions.zsh`](#functionszsh) - autoload all functions (executable files) defined in any directory named `functions` throughout this repo (`$DOTFILES/**/functions`)
+- [`functions.zsh`](#functionszsh) - autoload all functions (executable files) defined in `$DOTFILES/functions`
+- [`fzf.zsh`](#fzfzsh) - configure `fzf`
+- [`fzf_git.zsh`](#fzf_gitzsh) - set up `git`-related `fzf` bindings (e.g. `M-r` for branches, `M-t` for commits, etc.)
+- [`git_aliases.zsh`](#git_aliaseszsh) - variety of useful aliases for `git` commands
 - [`keymap.zsh`](#keymapzsh) - enable `vim` mode for [`zsh` line editor (`zle`)](http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html) and define related keymappings
+- [`local.zsh`](#localzsh) - local (computer-specific) overrides (gitignored & sourced only if it exists)
 - [`manydots.zsh`](#manydotszsh) - add a `zle` widget to facilitate specifying relative directories multiple levels above the current directory (transforms `...` -> `../..`)
 - [`path.zsh`](#pathzsh) - configure `$PATH`
 - [`plugins.zsh`](#pluginszsh) - enable and configure plugins. Managed by [`zinit`](https://github.com/zdharma/zinit).
 - [`prompt.zsh`](#promptzsh) - configure prompt appearance (currently [`powerlevel10k`](https://github.com/romkatv/powerlevel10k))
-- [`secrets.zsh`](#secretszsh) - store secrets such as API tokens. This file is not checked in to version control (ignored in `$DOTFILES/.gitignore`) and sourced only if it exists.
-- [`zle-fsh-theme-overlay.ini`](#zle-fsh-theme-overlayini) - an overlay to customize syntax highlighting
+- [`secrets.zsh`](#secretszsh) - store secrets such as API tokens (gitignored & sourced only if it exists)
 - [`zshenv`](#zshenv) - define environment variables, loaded before any other file in this folder (this file defines `$DOTFILES` & `$PATH`)
 - [`zshrc`](#zshrc) - source every `*.zsh` throughout this repo (`$DOTFILES/**/*.zsh`) to set up config
 
@@ -45,21 +47,10 @@ In a sign of `zsh`'s mainstreamness Apple is switching to `zsh` for its default 
 
 Define generic aliases.
 
-Topic-specific aliases (for example aliases for `tmux`) should go in the corresponding topic folder (e.g. [`$DOTFILES/tmux/alias.zsh`](../tmux/alias.zsh)).
-
 Notable aliases:
 
-- `srczsh` - `source $HOME/.zshrc`, reload `zshrc`
-- `zshn` - `zsh -f`, launch shell w/o config
-- `rr` - `git rev-parse --show-toplevel`, gives the absolute path to the root of the current repo
-- `rm` - disables `rm` to force usage of [`trash`](https://github.com/sindresorhus/trash) (aliased to `t` elsewhere in this file)
 - `e` - `$EDITOR`, provides a generic command to edit a file regardless of the backing program
 - `f` - `rg` if installed, `grep -R` otherwise. Similar to `e`, provides a generic command regardless of backing program.
-- `t` - [`trash`](https://github.com/sindresorhus/trash), a utility to move files/folders to the trash (instead of deleting permanently) on macOS for recoverability
-
-### [`asdf.zsh`](./asdf.zsh)
-
-Initialize the [`asdf`](https://asdf-vm.com) version manager.
 
 ### [`completion.zsh`](./completion.zsh)
 
@@ -71,11 +62,13 @@ Currently only sets `$EDITOR` to `nvim`.
 
 ### [`functions.zsh`](./functions.zsh)
 
-Autoload all functions (executable files) defined in any directory named `functions` throughout this repo (`$DOTFILES/**/functions`).
+Autoload all functions (executable files) defined under `$DOTFILES/functions`.
 
 ### [`keymap.zsh`](./keymap.zsh)
 
 Turn on `vim` mode for [`zle`](http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html) and define related keymappings.
+
+This is disabled by default & can be turned on by setting `vi-mode` to `true` in [`$DOTFILES/.files-settings.json`](../.files-settings.json).
 
 Add keymappings to support text objects supported by `vim`. Each of the following can be used with `i` or `a` (e.g. `i<character>` or `a<character>`): `'`, `"`, \`, `{`, `(`, `[`, `<`.
 
@@ -90,6 +83,42 @@ Additional notable keymappings:
     - `'` moves to end of line (same behavior as `$`)
     - `"` moves to start of line (same behavior as `0`)
   - `v` to edit the current command in `$EDITOR`. Quitting the opened editor dumps the edited command to the command line for execution.
+
+### [`fzf.zsh`](./fzf.zsh)
+
+Enables completions/[keybindings](../fzf.md#keybindings) along with configuring commands/options.
+
+### [`fzf_git.zsh`](./fzf_git.zsh)
+
+Enables [`git`-related bindings](../fzf_git.md#git-bindings) (e.g. `M-r` for branches, `M-t` for commits, etc.).
+
+### [`git_aliases.zsh`](./git_aliases.zsh)
+
+Defines various useful `git` aliases. Most of these aliases avoid using pagers when possible.
+
+This can be disabled by setting `git-aliases` to `false` in [`$DOTFILES/.files-settings.json`](../.files-settings.json).
+
+A few of my most used:
+
+- `gb` -> `git branch`
+- `gcm` -> `git commit -m`
+- `gco` -> `git checkout`
+  - `gcom` -> `git checkout master`
+- `gl` -> `git log`
+- `gpl` -> `git pull`
+- `gps` -> `git push`
+- `gs` -> `git status --short --branch` - default to less verbose status
+- `gr` -> `git rebase --interactive`
+  - `gra` -> `git rebase --abort`
+  - `grc` -> `git rebase --continue`
+  - `grm` -> `git rebase --interactive master`
+  - `gu` -> `git reset HEAD~` - undo last commit, retains all changes from the commits unstaged
+
+### [`local.zsh`](./local.zsh)
+
+Apply local (computer-specific) config (not secrets, for better hygiene those should be in `$DOTFILES/secrets.zsh`).
+
+This file is not checked in to version control (ignored in `$DOTFILES/.gitignore`) and sourced only if it exists.
 
 ### [`manydots.zsh`](./manydots.zsh)
 
@@ -125,12 +154,6 @@ Store secrets such as API tokens.
 
 This file is not checked in to version control (ignored in `$DOTFILES/.gitignore`) and sourced only if it exists.
 
-### [`zle-fsh-theme-overlay.ini`](./zle-fsh-theme-overlay.ini)
-
-Customize ZLE syntax highlighting.
-
-The default comment highlighting is unreadable on my terminal theme. This overlay fixes that following the advice [here](https://github.com/zdharma/fast-syntax-highlighting/issues/138#issuecomment-502383578).
-
 ### [`zshenv`](./zshenv)
 
 Define environment variables, loaded before any other file in this folder.
@@ -154,10 +177,12 @@ Source every `*.zsh` in `$DOTFILES` (NOT just `.zsh` files in this folder) and a
 1. [`dynamic_env_vars.zsh`](./path.zsh)
 1. [`functions.zsh`](./functions.zsh)
 1. [`alias.zsh`](./alias.zsh)
+1. [`git_aliases.zsh`](./git_aliases.zsh)
+1. [`fzf.zsh`](./fzf.zsh)
+1. [`fzf_git.zsh`](./fzf_git.zsh)
 1. [`plugins.zsh`](./plugins.zsh)
 1. [`prompt.zsh`](./prompt.zsh)
-1. all `.zsh` files throughout this repository (`$DOTFILES/**/*.zsh`) excluding those in `$DOTFILES/zsh` (this directory).
-1. [`asdf.zsh`](./asdf.zsh)
+1. [`local.zsh`](./local.zsh)
 
 `zshrc` itself is loaded after `zshenv` based on `zsh`'s [startup file loading order](http://zsh.sourceforge.net/Intro/intro_3.html).
 

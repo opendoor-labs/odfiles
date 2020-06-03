@@ -31,16 +31,7 @@ zinit light zsh-users/zsh-autosuggestions
 
 # note: any plugins that define widgets the syntax highlighting might need to
 # color (such as `zsh-autosuggestions`) must be loaded prior
-# ref - search fast-syntax-highlighting
-# http://zdharma.org/zinit/wiki/GALLERY/#plugins
-#
-# TODO: enable asynchronous loading once this issue is resolved
-# https://github.com/zdharma/fast-syntax-highlighting/issues/177
-# zinit ice wait lucid atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay"
-# TODO: remove `atload="FAST_HIGHLIGHT[...]="` once this issue is resolved
-# https://github.com/zdharma/fast-syntax-highlighting/issues/179
-zinit ice atload"FAST_HIGHLIGHT[chroma-man]="
-zinit light zdharma/fast-syntax-highlighting
+zinit light zsh-users/zsh-syntax-highlighting
 
 # synchronize system clipboard
 # theoretically you might need to source this after other keymappings, have not
@@ -60,14 +51,6 @@ zinit light romkatv/powerlevel10k
 # quickly `cd` to folders based on frequency and recency of access
 zinit ice wait lucid
 zinit light skywind3000/z.lua
-
-# initialize direnv environment variable manager - direnv.net
-# ref - https://zdharma.org/zinit/wiki/Direnv-explanation/
-zinit from"gh-r" as"program" mv"direnv* -> direnv" \
-    atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' \
-    pick"direnv" src="zhook.zsh" for \
-        direnv/direnv
-
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< end of plugins >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<< start of plugin config >>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -76,6 +59,13 @@ zinit from"gh-r" as"program" mv"direnv* -> direnv" \
 # ref - https://github.com/zsh-users/zsh-autosuggestions#configuration
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244' # light grey
 ZSH_AUTOSUGGEST_USE_ASYNC=true # can be set to anything
+
+# <<<< syntax highlighting >>>>
+# refs:
+# - https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
+# - https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[comment]='fg=111'
 
 # << keymappings >>
 # ref - https://github.com/zsh-users/zsh-autosuggestions#key-bindings
