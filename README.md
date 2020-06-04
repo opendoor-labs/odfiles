@@ -1,18 +1,70 @@
 # odotfiles
 
-macOS configuration for Opendoor employees.
+`zsh` configuration for Opendoor employees.
 
 ## toc
 
-- [why use this?](#why-use-this)
-  - [the pitch](#the-pitch)
-  - [the anti-pitch](#the-anti-pitch)
-  - [.files values](#files-values)
 - [quickstart](#quickstart)
 - [next steps](#next-steps)
   - [add your own configuration](#add-your-own-configuration)
   - [add secrets safely](#add-secrets-safely)
   - [explore features/configuration](#explore-featuresconfiguration)
+- [why use this?](#why-use-this)
+  - [the pitch](#the-pitch)
+  - [the anti-pitch](#the-anti-pitch)
+  - [.files values](#files-values)
+
+## quickstart
+
+These dotfiles use 24 bit (true) color. For best results use a terminal emulator that supports this feature (the default macOS emulator, `Terminal`, does **not**). Here are a few possibilities: [`Alacritty`](https://github.com/alacritty/alacritty), [`kitty`](https://sw.kovidgoyal.net/kitty/), [`iTerm2` (macOS-specific)](https://iterm2.com/).
+
+The below commands will run the [`infra/setup/setup_dotfiles`](./infra/setup/setup_dotfiles) which will walk through installing shell utilities, symlinking files to their appropriate locations, etc. See the [`infra/setup`](./infra/setup/) folder for documentation on the setup process.
+
+```bash
+cd $HOME # to clone dotfiles to `$HOME/.odotfiles`
+# now clone this repo and run setup
+git clone https://github.com/opendoor-labs/odotfiles.git .odotfiles
+cd .odotfiles
+make setup
+```
+
+Unless something went wrong (🤞) you're all set up now! 🎉
+
+Check out [next steps](#next-steps) below to explore features/configuration possibilities.
+
+## next steps
+
+### add your own configuration
+
+If you have your own shell configuration (a `.bashrc`, `.bash_profile`, `.zshrc`, etc.) you will likely be able to simply source it and get the best of this config while overriding with your own.
+
+> Note: `zsh` is mostly backwards compatible with `bash`. Enough so that most `bash` configs can be sourced from `zsh` without any issues. If you have a more complex `bash` config there may be compatibility issues.
+
+To do so, simply move or copy the file to `$DOTFILES/zsh/local.zsh`. For example, if you want to preserve configuration from a `.bashrc` you'd run the following:
+
+```bash
+# or `mv`
+cp $HOME/.bashrc $DOTFILES/zsh/local.zsh
+source $HOME/.zshrc
+```
+
+Your configuration should now be applied on top of these dotfiles. Feel free to open an issue if you have any trouble!
+
+### explore features/configuration
+
+Here's a few items you might be interested in trying/learning more about:
+
+- use [`fzf` keybindings](./fzf.md#keybindings) to speed up so many things from quickly fuzzily selecting files, find `zsh` history items you half-remember typing weeks ago, checking out the commit from the one keyword you remember typing in the commit message & more
+- use `z <directory-fragment>` to quickly jump to frequently/recently visited directories from anywhere
+  - for example, `z down` to jump to downloads or `z .f` to jump to this directory
+- configure high-level features of these dotfiles (changing the theme, setting your editor, disabling the prompt, etc.) via the [settings](./infra/docs/settings.md)
+- configure your prompt appearance via `p10k configure` (or disable the prompt altogether via the `prompt` setting from the previous bullet point)
+
+### add secrets safely
+
+**DO NOT** check in any tokens or credentials like `NPM_TOKEN`s, database URLs, etc. To avoid this, add such secrets to the gitignored `$DOTFILES/zsh/secrets.zsh` (you'll need to create it the first time you want to add a secret).
+
+> Technically `$DOTFILES/zsh/local.zsh` is gitignored as well but splitting out secrets into a separate file can help avoid accidental leakage.
 
 ## why use this?
 
@@ -48,7 +100,7 @@ These dotfiles give you the best of a custom configuration without the hassle of
 - 'mo code, 'mo problems - additional dependencies can cause headaches and add complexity or fragility that outweighs the benefits
 - no single dotfiles configuration is best for everyone - these dotfiles are intended to be a widely useful base config but it may not work for your particular use cases
 
-### .files values
+### values
 
 Aspirational principles:
 
@@ -56,57 +108,3 @@ Aspirational principles:
 - customizable - support different configurations for different users (without adding too much additional complexity/fragility)
 - passively useful - be useful & worthwhile without learning any aliases or keybindings, modifying any settings or reading any documentation
 - respectful of defaults - make non-standard modifications (e.g. overwriting commonly used bindings) opt-in/easily configurable wherever possible
-
-## quickstart
-
-These dotfiles use 24 bit (true) color. For best results use a terminal emulator that supports this feature (the default macOS emulator, `Terminal`, does **not**). Here are a few possibilities: [`Alacritty`](https://github.com/alacritty/alacritty), [`kitty`](https://sw.kovidgoyal.net/kitty/), [`iTerm2` (macOS-specific)](https://iterm2.com/).
-
-The below commands will run the [`infra/setup/setup_dotfiles`](./infra/setup/setup_dotfiles) which will walk through installing shell utilities, symlinking files to their appropriate locations, etc. See the [`infra/setup`](./infra/setup/) folder for documentation on the setup process.
-
-```bash
-cd $HOME # to clone dotfiles to `$HOME/.odotfiles`
-# install git on new computers (no-ops if already installed)
-xcode-select --install
-# now clone this repo and run setup
-git clone https://github.com/opendoor-labs/odotfiles.git .odotfiles
-cd .odotfiles
-make setup
-```
-
-Unless something went wrong (🤞) you're all set up now! 🎉
-
-Check out [next steps](#next-steps) below to explore features/configuration possibilities.
-
-## next steps
-
-### add your own configuration
-
-If you have your own shell configuration (a `.bashrc`, `.bash_profile`, `.zshrc`, etc.) you will likely be able to simply source it and get the best of this config while overriding with your own.
-
-> Note: `zsh` is mostly backwards compatible with `bash`. Enough so that most `bash` configs can be sourced from `zsh` without any issues. If you have a more complex `bash` config there may be compatibility issues.
-
-To do so, simply move or copy the file to `$DOTFILES/zsh/local.zsh`. For example, if you want to preserve configuration from a `.bashrc` you'd run the following:
-
-```bash
-# or `mv`
-cp $HOME/.bashrc $DOTFILES/zsh/local.zsh
-source $HOME/.zshrc
-```
-
-Your configuration should now be applied on top of these dotfiles. Feel free to open an issue if you have any trouble!
-
-### add secrets safely
-
-**DO NOT** check in any tokens or credentials like `NPM_TOKEN`s, database URLs, etc. To avoid this, add such secrets to the gitignored `$DOTFILES/zsh/secrets.zsh` (you'll need to create it the first time you want to add a secret).
-
-> Technically `$DOTFILES/zsh/local.zsh` is gitignored as well but splitting out secrets into a separate file can help avoid accidental leakage.
-
-### explore features/configuration
-
-Here's a few items you might be interested in trying/learning more about:
-
-- configure high-level features of these dotfiles (changing the theme, setting your editor, disabling the prompt, etc.) via the [settings](./infra/docs/settings.md)
-- configure your prompt appearance via `p10k configure` (or disable the prompt altogether via the `prompt` setting from the previous bullet point)
-- use [`fzf` keybindings](./fzf.md#keybindings) to speed up so many things from quickly fuzzily selecting files, find zsh history items you half-remember typing weeks ago, checking out the commit from the one keyword you remember typing in the commit message & more
-- use `z <directory-fragment>` to quickly jump to frequently/recently visited directories from anywhere
-  - for example, `z down` to jump to downloads or `z .f` to jump to this directory
