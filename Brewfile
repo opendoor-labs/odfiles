@@ -17,10 +17,6 @@ tap "homebrew/core"
 # bundle to use `Brewfile`
 tap "homebrew/bundle"
 
-# delta
-# ref - https://github.com/dandavison/delta
-tap "dandavison/delta", "https://github.com/dandavison/delta"
-
 # <<<<<<<< packages (formulae) >>>>>>>>
 
 brew "bat"
