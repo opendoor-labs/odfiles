@@ -4,7 +4,7 @@
 #
 # refs:
 # - http://zdharma.org/zinit/wiki/INTRODUCTION/
-# - https://github.com/zdharma/zinit#zinit-wiki
+# - https://github.com/zdharma-continuum/zinit#zinit-wiki
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< start of plugins >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -21,7 +21,7 @@
 # - lucid - skip `Loaded ...` message
 #
 # refs:
-# - https://github.com/zdharma/zinit#ice-modifiers
+# - https://github.com/zdharma-continuum/zinit#ice-modifiers
 # - http://zdharma.org/zinit/wiki/INTRODUCTION/#some_ice-modifiers
 
 # ref - search zsh-autosuggestions
@@ -34,7 +34,7 @@ zinit light zsh-users/zsh-autosuggestions
 # ref - search fast-syntax-highlighting
 # http://zdharma.org/zinit/wiki/GALLERY/#plugins
 zinit ice atload"FAST_HIGHLIGHT[chroma-man]="
-zinit light zdharma/fast-syntax-highlighting
+zinit light zdharma-continuum/fast-syntax-highlighting
 
 # synchronize system clipboard
 # theoretically you might need to source this after other keymappings, have not
