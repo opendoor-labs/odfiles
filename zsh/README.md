@@ -154,7 +154,7 @@ Define environment variables, loaded before any other file in this folder.
 A few notable environment variables:
 
 - `$DOTFILES` - specifies path to the root of this repo, used throughout `zsh` configuration
-- `$HOMEBREW_PREFIX` - should be equivalent to `brew --prefix`. Hardcoded (dynamic between OSes) to the current stable location to avoid overhead of `brew --prefix` (~25 ms)
+- `$HOMEBREW_PREFIX` - set to `brew --prefix`
 
 This file symlinked to `$HOME/.zshenv` by [`$DOTFILES/infra/setup/bin/symlink`](../infra/setup/bin/symlink)
 

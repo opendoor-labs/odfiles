@@ -8,12 +8,7 @@ main() {
     dynamically_determine_dotfiles # see function at end of file
   fi
 
-  # `brew --prefix` takes ~25-40ms on my machine
-  # to avoid that overhead I hardcode the path based on the existence of a folder
-  #
-  # to see times on your machine (you may have to `brew install hyperfine`):
-  # - `hyperfine 'brew --prefix'`
-  export HOMEBREW_PREFIX='/usr/local'
+  export HOMEBREW_PREFIX="$(brew --prefix)"
 
   # XDG directory specification
   # ref - https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
