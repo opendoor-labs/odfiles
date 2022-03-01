@@ -2,19 +2,49 @@
 # shellcheck disable=SC2016
 
 # check that DOTFILES variable is defined
-# shellcheck disable=SC1090
+# shellcheck disable=SC1091
 source "${BASH_SOURCE%/*}/../check_dotfiles_variable.sh"
 
 source "$DOTFILES/infra/scripts/prompts.sh"
 
-# installation
-command -v brew > /dev/null || {
-  info '`brew` not installed, installing now...'
-  if /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; then
-    success '`brew` successfully installed'
+"$DOTFILES/infra/scripts/is_macos.sh" || {
+  info "these dotfiles don't use \`brew\` in Linux environments - skipping"
+  return
+}
+
+command -v brew > /dev/null && {
+  # shellcheck disable=SC2016
+  info '`brew` installed and executable, skipping installation'
+  return
+}
+
+# shellcheck disable=SC2016
+info '`brew` not installed, installing now...'
+
+# installation - https://brew.sh/
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+"$DOTFILES/infra/scripts/is_apple_silicon.sh" && {
+  # add just installed `brew` to $PATH
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+}
+
+brew_command="brew"
+
+command -v "$brew_command" > /dev/null || {
+  if "$DOTFILES/infra/scripts/is_apple_silicon.sh"; then
+    expected_brew_path="/opt/homebrew/bin/brew"
   else
-    fail '`brew` failed to install'
+    expected_brew_path="/usr/local/bin/brew"
   fi
+
+  [ -x "$expected_brew_path" ] || {
+    printf "\`brew\` is not in \$PATH and there is no executable file at the \
+expected path: %s. Bailing." "$expected_brew_path"
+    return 1
+  }
+
+  brew_command="$expected_brew_path"
 }
 
 info 'installing `brew` dependencies'

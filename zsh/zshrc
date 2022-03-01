@@ -38,6 +38,12 @@ source "$DOTFILES/zsh/manydots.zsh"
 
 source "$DOTFILES/zsh/dynamic_env_vars.zsh"
 
+# add `brew` and installed formulae to $PATH
+apple_silicon_brew_path="/opt/homebrew/bin/brew"
+[ -x "$apple_silicon_brew_path" ] && {
+  eval "$("$apple_silicon_brew_path" shellenv)"
+}
+
 source "$DOTFILES/zsh/functions.zsh"
 
 # source after $DOTFILES/zsh/functions.zsh to allow aliasing those functions
