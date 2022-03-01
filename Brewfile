@@ -21,6 +21,7 @@ tap "homebrew/bundle"
 
 brew "bat"
 brew "exa"
+brew "direnv"
 brew "fd"
 brew "fzf"
 brew "git"
