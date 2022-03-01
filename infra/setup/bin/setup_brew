@@ -15,7 +15,7 @@ source "$DOTFILES/infra/scripts/prompts.sh"
 command -v brew > /dev/null && {
   # shellcheck disable=SC2016
   info '`brew` installed and executable, skipping installation'
-  return
+  return > /dev/null 2>&1 || exit 0
 }
 
 # shellcheck disable=SC2016
