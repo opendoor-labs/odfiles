@@ -29,6 +29,11 @@ source "$DOTFILES/zsh/completion.zsh"
 source "$DOTFILES/zsh/keymap.zsh"
 source "$DOTFILES/zsh/manydots.zsh"
 
+"$DOTFILES/infra/scripts/is_apple_silicon.sh" && {
+  # add just installed `brew` to $PATH
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+}
+
 # <<<< files with dependencies >>>>
 # these files depend either on executables made accessible via $PATH or code
 # defined in earlier config files.
