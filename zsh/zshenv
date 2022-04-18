@@ -20,10 +20,6 @@ main() {
   export XDG_CONFIG_HOME="$HOME/.config"
   export XDG_DATA_HOME="$HOME/.local/share"
 
-  # << homebrew >>
-  # ref - https://github.com/Homebrew/brew/blob/master/docs/Manpage.md#environment
-  export HOMEBREW_NO_AUTO_UPDATE=true # never autoupdate
-
   # prevent generation of .pyc files
   export PYTHONDONTWRITEBYTECODE=1
 
