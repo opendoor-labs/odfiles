@@ -44,7 +44,7 @@ set_git_pager_theme() {
   fi
 
   # https://git-scm.com/docs/git-config#Documentation/git-config.txt-corepager
-  export GIT_PAGER="delta --tabs=2 --hunk-style=plain --highlight-removed\
+  export GIT_PAGER="delta --tabs=2 --highlight-removed\
     --theme='$pager_theme'${color_overrides}"
 }
 
