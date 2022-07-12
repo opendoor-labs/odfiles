@@ -21,5 +21,4 @@ files=$(
 unset files
 
 _fzf_edit_widget_ret=$?
-zle fzf-redraw-prompt
 return "$_fzf_edit_widget_ret"
