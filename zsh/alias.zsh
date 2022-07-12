@@ -33,6 +33,10 @@ command -v exa > /dev/null && {
 }
 # <<<<<<<<< end of exa >>>>>>>>>
 
+command -v smat > /dev/null && {
+  alias cat=smat
+}
+
 # <<<<<<<<< ripgrep >>>>>>>>>
 if command -v rg > /dev/null; then
   alias f='rg --smart-case'
