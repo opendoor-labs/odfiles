@@ -8,11 +8,17 @@ main() {
     dynamically_determine_dotfiles # see function at end of file
   fi
 
+  # ensure path variable is unique set
+  typeset -TU PATH path
+
   # add `brew` and installed formulae to $PATH
   apple_silicon_brew_path="/opt/homebrew/bin/brew"
-  [ -x "$apple_silicon_brew_path" ] && {
+  if [ -x "$apple_silicon_brew_path" ]; then
     eval "$("$apple_silicon_brew_path" shellenv)"
-  }
+  else
+    path+=(/usr/local/bin)
+  fi
+
   export HOMEBREW_PREFIX="$(brew --prefix)"
 
   # XDG directory specification
