@@ -39,12 +39,12 @@ set_git_pager_theme() {
   else
     # default to dark theme
     pager_theme="TwoDark"
-    color_overrides=" --plus-color='#1c3428' --plus-emph-color='#37664e'\
-      --minus-color='#390423' --minus-emph-color='#af0d6c'"
+    color_overrides=" --plus-style='#1c3428' --plus-emph-style='#37664e'\
+      --minus-style='#390423' --minus-emph-style='#af0d6c'"
   fi
 
   # https://git-scm.com/docs/git-config#Documentation/git-config.txt-corepager
-  export GIT_PAGER="delta --tabs=2 --theme='$pager_theme'${color_overrides}"
+  export GIT_PAGER="delta --tabs=2 --syntax-theme='$pager_theme'${color_overrides}"
 }
 
 main "$@"
