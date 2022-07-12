@@ -12,39 +12,47 @@ source "$DOTFILES/infra/scripts/prompts.sh"
   return
 }
 
-command -v brew > /dev/null && {
-  # shellcheck disable=SC2016
-  info '`brew` installed and executable, skipping installation'
-  return > /dev/null 2>&1 || exit 0
-}
+check_brew_command() {
+  brew_command="brew"
+  command -v "$brew_command" > /dev/null || {
+    if "$DOTFILES/infra/scripts/is_apple_silicon.sh"; then
+      expected_brew_path="/opt/homebrew/bin/brew"
+    else
+      expected_brew_path="/usr/local/bin/brew"
+    fi
 
-# shellcheck disable=SC2016
-info '`brew` not installed, installing now...'
-
-# installation - https://brew.sh/
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-
-"$DOTFILES/infra/scripts/is_apple_silicon.sh" && {
-  # add just installed `brew` to $PATH
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-}
-
-brew_command="brew"
-
-command -v "$brew_command" > /dev/null || {
-  if "$DOTFILES/infra/scripts/is_apple_silicon.sh"; then
-    expected_brew_path="/opt/homebrew/bin/brew"
-  else
-    expected_brew_path="/usr/local/bin/brew"
-  fi
-
-  [ -x "$expected_brew_path" ] || {
-    printf "\`brew\` is not in \$PATH and there is no executable file at the \
+    [ -x "$expected_brew_path" ] || {
+      printf "\`brew\` is not in \$PATH and there is no executable file at the \
 expected path: %s. Bailing." "$expected_brew_path"
-    return 1
+      return 1
+    }
+
+    brew_command="$expected_brew_path"
+  }
+}
+
+install_brew() {
+  # shellcheck disable=SC2016
+  info '`brew` not installed, installing now...'
+
+  # installation - https://brew.sh/
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+  "$DOTFILES/infra/scripts/is_apple_silicon.sh" && {
+    # add just installed `brew` to $PATH
+    eval "$(/opt/homebrew/bin/brew shellenv)"
   }
 
-  brew_command="$expected_brew_path"
+  check_brew_command || {
+    info 'failed to install `brew`, bailing'
+    exit 1
+  }
+}
+
+check_brew_command || {
+  # shellcheck disable=SC2016
+  info '`brew` not installed, installing now'
+  install_brew
 }
 
 info 'installing `brew` dependencies'
