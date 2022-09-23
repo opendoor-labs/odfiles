@@ -39,8 +39,8 @@ set_git_pager_theme() {
   else
     # default to dark theme
     pager_theme="TwoDark"
-    color_overrides=" --plus-style='#1c3428' --plus-emph-style='#37664e'\
-      --minus-style='#390423' --minus-emph-style='#af0d6c'"
+    color_overrides=" --plus-style='syntax #1c3428' --plus-emph-style='syntax #37664e'\
+      --minus-style='syntax #390423' --minus-emph-style='syntax #af0d6c'"
   fi
 
   # https://git-scm.com/docs/git-config#Documentation/git-config.txt-corepager
